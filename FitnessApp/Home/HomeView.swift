@@ -1,0 +1,135 @@
+//
+//  HomeView.swift
+//  FitnessApp
+//
+//  Created by Andre Gallegos on 11/8/25.
+//
+
+import SwiftUI
+
+struct HomeView: View {
+    @State var calories: Int = 123
+    @State var active: Int = 52
+    @State var stand: Int = 8
+    
+    var mockActivities = [
+        Activity(id: 0, title: "Today steps", subtitle: "Goal 12,000", image: "figure.walk", tintColor: .green, amount: "9,812"),
+        Activity(id: 1, title: "Today steps", subtitle: "Goal 12,000", image: "figure.walk", tintColor: .red, amount: "9,812"),
+        Activity(id: 2, title: "Today steps", subtitle: "Goal 12,000", image: "figure.walk", tintColor: .blue, amount: "9,812"),
+        Activity(id: 3, title: "Today steps", subtitle: "Goal 12,000", image: "figure.walk", tintColor: .purple, amount: "9,812")
+    ]
+    
+    var body: some View {
+        NavigationStack {
+            ScrollView(showsIndicators: true) {
+                VStack(alignment: .leading) {
+                    Text("Welcome")
+                        .font(Font.largeTitle)
+                        .padding()
+                    
+                    HStack {
+                        
+                        Spacer()
+                        
+                        VStack {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Calories")
+                                    .font(.callout)
+                                    .bold()
+                                    .foregroundStyle(Color(.red))
+                                
+                                Text("123 kcal")
+                                    .bold()
+                            }
+                            .padding(.bottom)
+                            
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Calories")
+                                    .font(.callout)
+                                    .bold()
+                                    .foregroundStyle(Color(.green))
+                                
+                                Text("123 kcal")
+                                    .bold()
+                            }
+                            .padding(.bottom)
+                            
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Calories")
+                                    .font(.callout)
+                                    .bold()
+                                    .foregroundStyle(Color(.blue))
+                                
+                                Text("123 kcal")
+                                    .bold()
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        ZStack {
+                            ProgressCircleView(progress: $calories, goal: 600, color: .red)
+                            
+                            ProgressCircleView(progress: $active, goal: 60, color: .green)
+                                .padding(.all, 20)
+                            
+                            ProgressCircleView(progress: $stand, goal: 12, color: .blue)
+                                .padding(.all, 40)
+                        }
+                        .padding(.horizontal)
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    
+                    HStack {
+                        Text("Fitness Activity")
+                            .font(.title2)
+                        
+                        Spacer()
+                        
+                        Button {
+                            print("Show More")
+                        } label: {
+                            Text("Show More")
+                                .padding(.all, 10)
+                                .foregroundStyle(Color(.white))
+                                .background(.blue)
+                                .cornerRadius(20)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+                        ForEach(mockActivities, id: \.id) { activity in
+                            ActivityCard(activity: activity)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    HStack {
+                        Text("Recent Workouts")
+                            .font(.title2)
+                        
+                        Spacer()
+                        
+                        NavigationLink {
+                            EmptyView()
+                        } label : {
+                            Text("Show More")
+                                .padding(.all, 10)
+                                .foregroundStyle(Color(.white))
+                                .background(.blue)
+                                .cornerRadius(20)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    HomeView()
+}
